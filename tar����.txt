@@ -1,0 +1,195 @@
+tar 命令详解,.tar.gz,.tar.bz2,.gzip文件怎么解压
+内容简介：本文介绍了linux下的压缩程式tar、gzip、gunzip、bzip2、bunzip2、compress 、uncompress、 zip、 unzip、rar、unrar等程式，以及如何使用它们对.tar、.gz 、.tar.gz、.tgz、.bz2、.tar.bz2、.Z、. tar.Z、.zip、.rar这10种压缩文件进行……
+标签：.tar.gz,,.tar.gz,.tar.bz2,.gzip如何解压,linux命令详解,
+功能说明：备份文件。
+
+语　　法：tar [-ABcdgGhiklmMoOpPrRsStuUvwWxzZ][-b <区块数目>][-C <目的目录>][-f <备份文件>][-F <Script文件>][-K <文件>][-L <媒体容量>][-N <日期时间>][-T <范本文件>][-V <卷册名称>][-X <范本文件>][-<设备编号><存储密度>][--after-date=<日期时间>] [--atime-preserve][--backuup=<备份方式>][--checkpoint][--concatenate] [--confirmation][--delete][--exclude=<范本样式>][--force-local] [--group=<群组名称>][--help][--ignore-failed-read][--new-volume- script=<Script文件>][--newer-mtime][--no-recursion][--null] [--numeric-owner][--owner=<用户名称>][--posix][--erve][--preserve- order][--preserve-permissions][--record-size=<区块数目>][--recursive- unlink][--remove-files][--rsh-command=<执行指令>][--same-owner] [--suffix=<备份字尾字符串>][--totals][--use-compress-program=<执行指令& gt;][--version][--volno-file=<编号文件>][文件或目录...]
+
+tar命令的选项有很多(用man tar可以查看到)，但常用的就那么几个选项，下面来举例说明一下：
+
+# tar -cf all.tar *.jpg
+这条命令是将所有.jpg的文件打成一个名为all.tar的包。-c是表示产生新的包
+，-f指定包的文件名。
+
+# tar -rf all.tar *.gif
+这条命令是将所有.gif的文件增加到all.tar的包里面去。-r是表示增加文件的意思。
+# tar -uf all.tar logo.gif
+这条命令是更新原来tar包all.tar中logo.gif文件，-u是表示更新文件的意思。
+
+
+# tar -tf all.tar
+这条命令是列出all.tar包中所有文件，-t是列出文件的意思
+
+# tar -xf all.tar
+这条命令是解出all.tar包中所有文件，-x是解开的意思
+
+以上就是tar的最基本的用法。为了方便用户在打包解包的同时可以压缩或解压文件，tar提供了一种特殊的功能。这就是tar可以在打包或解包的同时调用其它的压缩程序，比如调用gzip、bzip2等。
+
+1) tar调用gzip
+
+gzip是GNU组织开发的一个压缩程序，.gz结尾的文件就是gzip压缩的结果。与gzip相对的解压程序是gunzip。tar中使用-z这个参数来调用gzip。下面来举例说明一下：
+
+# tar -czf all.tar.gz *.jpg
+这条命令是将所有.jpg的文件打成一个tar包，并且将其用gzip压缩，生成一个gzip压缩过的包，包名为all.tar.gz
+
+# tar -xzf all.tar.gz
+这条命令是将上面产生的包解开。
+
+2) tar调用bzip2
+
+bzip2是一个压缩能力更强的压缩程序，.bz2结尾的文件就是bzip2压缩的结果。与bzip2相对的解压程序是bunzip2。tar中使用-j这个参数来调用gzip。下面来举例说明一下：
+
+# tar -cjf all.tar.bz2 *.jpg
+这条命令是将所有.jpg的文件打成一个tar包，并且将其用bzip2压缩，生成一个bzip2压缩过的包，包名为all.tar.bz2
+
+# tar -xjf all.tar.bz2
+这条命令是将上面产生的包解开。
+3)tar调用compress
+
+compress也是一个压缩程序，但是好象使用compress的人不如gzip和bzip2的人多。.Z结尾的文件就是bzip2压缩的结果。与 compress相对的解压程序是uncompress。tar中使用-Z这个参数来调用compress。下面来举例说明一下：
+
+# tar -cZf all.tar.Z *.jpg
+这条命令是将所有.jpg的文件打成一个tar包，并且将其用compress压缩，生成一个uncompress压缩过的包，包名为all.tar.Z
+
+# tar -xZf all.tar.Z
+这条命令是将上面产生的包解开
+
+有了上面的知识，你应该可以解开多种压缩文件了，下面对于tar系列的压缩文件作一个小结：
+
+1)对于.tar结尾的文件
+
+tar -xf all.tar
+
+2)对于.gz结尾的文件
+
+gzip -d all.gz
+gunzip all.gz
+
+3)对于.tgz或.tar.gz结尾的文件
+
+tar -xzf all.tar.gz
+tar -xzf all.tgz
+
+4)对于.bz2结尾的文件
+
+bzip2 -d all.bz2
+bunzip2 all.bz2
+
+5)对于tar.bz2结尾的文件
+
+tar -xjf all.tar.bz2
+
+6)对于.Z结尾的文件
+
+uncompress all.Z
+
+7)对于.tar.Z结尾的文件
+
+tar -xZf all.tar.z
+
+另外对于Window下的常见压缩文件.zip和.rar，Linux也有相应的方法来解压它们：
+
+1)对于.zip
+
+linux下提供了zip和unzip程序，zip是压缩程序，unzip是解压程序。它们的参数选项很多，这里只做简单介绍，依旧举例说明一下其用法：
+
+# zip all.zip *.jpg
+这条命令是将所有.jpg的文件压缩成一个zip包
+# unzip all.zip
+这条命令是将all.zip中的所有文件解压出来
+
+2)对于.rar
+
+要在linux下处理.rar文件，需要安装RAR for Linux，可以从网上下载，但要记住，RAR for Linux不是免费的；可从http://www.ubooo.com/ 下载RARfor Linux 3.2.0，然后安装：
+
+# tar -xzpvf rarlinux-3.2.0.tar.gz
+# cd rar
+# make
+
+这样就安装好了，安装后就有了rar和unrar这两个程序，rar是压缩程序，unrar是解压程序。它们的参数选项很多，这里只做简单介绍，依旧举例说明一下其用法：
+
+
+# rar a all *.jpg
+这条命令是将所有.jpg的文件压缩成一个rar包，名为all.rar，该程序会将.rar扩展名将自动附加到包名后。
+
+# unrar e all.rar
+这条命令是将all.rar中的所有文件解压出来
+
+到此为至，我们已经介绍过linux下的tar、gzip、gunzip、bzip2、bunzip2、compress、 uncompress、 zip、unzip、rar、unrar等程式，你应该已经能够使用它们对.tar、.gz、.tar.gz、.tgz、.bz2、.tar.bz2、. Z、.tar.Z、.zip、.rar这10种压缩文件进行解压了，以后应该不需要为下载了一个软件而不知道如何在Linux下解开而烦
+恼了。而且以上方法对于Unix也基本有效。
+
+
+补充说明：tar是用来建立，还原备份文件的工具程序，它可以加入，解开备份文件内的文件。
+
+参　　数：
+-A或--catenate 新增温暖件到已存在的备份文件。
+-b<区块数目>或--blocking-factor=<区块数目> 设置每笔记录的区块数目，每个区块大小为12Bytes。
+-B或--read-full-records 读取数据时重设区块大小。
+-c或--create 建立新的备份文件。
+-C<目的目录>或--directory=<目的目录> 切换到指定的目录。
+-d或--diff或--compare 对比备份文件内和文件系统上的文件的差异。
+-f<备份文件>或--file=<备份文件> 指定备份文件。
+-F<Script文件>或--info-script=<Script文件> 每次更换磁带时，就执行指定的Script文件。
+-g或--listed-incremental 处理GNU格式的大量备份。
+-G或--incremental 处理旧的GNU格式的大量备份。
+-h或--dereference 不建立符号连接，直接复制该连接所指向的原始文件。
+-i或--ignore-zeros 忽略备份文件中的0 Byte区块，也就是EOF。
+-k或--keep-old-files 解开备份文件时，不覆盖已有的文件。
+-K<文件>或--starting-file=<文件> 从指定的文件开始还原。
+-l或--one-file-system 复制的文件或目录存放的文件系统，必须与tar指令执行时所处的文件系统相同，否则不予复制。
+-L<媒体容量>或-tape-length=<媒体容量> 设置存放每体的容量，单位以1024 Bytes计算。
+-m或--modification-time 还原文件时，不变更文件的更改时间。
+-M或--multi-volume 在建立，还原备份文件或列出其中的内容时，采用多卷册模式。
+-N<日期格式>或--newer=<日期时间> 只将较指定日期更新的文件保存到备份文件里。
+-o或--old-archive或--portability 将资料写入备份文件时使用V7格式。
+-O或--stdout 把从备份文件里还原的文件输出到标准输出设备。
+-p或--same-permissions 用原来的文件权限还原文件。
+-P或--absolute-names 文件名使用绝对名称，不移除文件名称前的"/"号。
+-r或--append 新增文件到已存在的备份文件的结尾部分。
+-R或--block-number 列出每个信息在备份文件中的区块编号。
+-s或--same-order 还原文件的顺序和备份文件内的存放顺序相同。
+-S或--sparse 倘若一个文件内含大量的连续0字节，则将此文件存成稀疏文件。
+-t或--list 列出备份文件的内容。
+-T<范本文件>或--files-from=<范本文件> 指定范本文件，其内含有一个或多个范本样式，让tar解开或建立符合设置条件的文件。
+-u或--update 仅置换较备份文件内的文件更新的文件。
+-U或--unlink-first 解开压缩文件还原文件之前，先解除文件的连接。
+-v或--verbose 显示指令执行过程。
+-V<卷册名称>或--label=<卷册名称> 建立使用指定的卷册名称的备份文件。
+-w或--interactive 遭遇问题时先询问用户。
+-W或--verify 写入备份文件后，确认文件正确无误。
+-x或--extract或--get 从备份文件中还原文件。
+-X<范本文件>或--exclude-from=<范本文件> 指定范本文件，其内含有一个或多个范本样式，让ar排除符合设置条件的文件。
+-z或--gzip或--ungzip 通过gzip指令处理备份文件。
+-Z或--compress或--uncompress 通过compress指令处理备份文件。
+-<设备编号><存储密度> 设置备份用的外围设备编号及存放数据的密度。
+--after-date=<日期时间> 此参数的效果和指定"-N"参数相同。
+--atime-preserve 不变更文件的存取时间。
+--backup=<备份方式>或--backup 移除文件前先进行备份。
+--checkpoint 读取备份文件时列出目录名称。
+--concatenate 此参数的效果和指定"-A"参数相同。
+--confirmation 此参数的效果和指定"-w"参数相同。
+--delete 从备份文件中删除指定的文件。
+--exclude=<范本样式> 排除符合范本样式的问家。
+--group=<群组名称> 把加入设备文件中的文件的所属群组设成指定的群组。
+--help 在线帮助。
+--ignore-failed-read 忽略数据读取错误，不中断程序的执行。
+--new-volume-script=<Script文件> 此参数的效果和指定"-F"参数相同。
+--newer-mtime 只保存更改过的文件。
+--no-recursion 不做递归处理，也就是指定目录下的所有文件及子目录不予处理。
+--null 从null设备读取文件名称。
+--numeric-owner 以用户识别码及群组识别码取代用户名称和群组名称。
+--owner=<用户名称> 把加入备份文件中的文件的拥有者设成指定的用户。
+--posix 将数据写入备份文件时使用POSIX格式。
+--preserve 此参数的效果和指定"-ps"参数相同。
+--preserve-order 此参数的效果和指定"-A"参数相同。
+--preserve-permissions 此参数的效果和指定"-p"参数相同。
+--record-size=<区块数目> 此参数的效果和指定"-b"参数相同。
+--recursive-unlink 解开压缩文件还原目录之前，先解除整个目录下所有文件的连接。
+--remove-files 文件加入备份文件后，就将其删除。
+--rsh-command=<执行指令> 设置要在远端主机上执行的指令，以取代rsh指令。
+--same-owner 尝试以相同的文件拥有者还原问家你。
+--suffix=<备份字尾字符串> 移除文件前先行备份。
+--totals 备份文件建立后，列出文件大小。
+--use-compress-program=<执行指令> 通过指定的指令处理备份文件。
+--version 显示版本信息。
+--volno-file=<编号文件> 使用指定文件内的编号取代预设的卷册编号。

@@ -1,0 +1,7 @@
+下面介绍几种查看linux版本信息的方法：
+
+1)uname -a（这个比较常用，可以查到一些系统硬件信息）
+
+2)cat /proc/version（可以查到该linux操作系统的版本信息）
+
+3)cat /etc/issue（可以查到系统的release版本等）

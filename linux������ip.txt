@@ -1,0 +1,44 @@
+Linux下手动设置IP地址（redhat、centos、fedora）
+(2011-07-28 12:34:12)
+转载
+标签：
+子网掩码
+ip地址
+网卡
+命令行模式
+网关
+linux
+手动设置
+it
+	分类： Linux
+Linux在命令行模式下设置IP没有图形化界面来的方便，只需要记住修改2个文件就能完成设置。
+
+文章出自数码矩阵(http://blog.sina.com.cn/digitalmatrix
+需要root权限
+先修改IP地址，使用Vim文本编辑
+vim /etc/sysconfig/network-scripts/ifcfg-eth0  <eth0只是网卡号，如有多块网卡（或网卡号不为eth0），请找到对应的文件后修改>
+
+将ifcfg-eth0的内容按以下方式改写
+DEVICE="eth0"               <网卡号，和ifcfg-eth0对应就可以>
+HWADDR="08:00:27:1C:81:0A"  <网卡的MAC地址>
+ONBOOT="yes"                <是否启用连接>
+BOOTPROTO=none              <手动设置IP选择none，自动获取选dhcp>
+IPADDR=192.168.1.100        <设定本网卡IP地址>
+NETMASK=255.255.255.0       <子网掩码>
+GATEWAY=192.168.1.254       <网关地址>
+后保存
+
+刚修改了IP、子网掩码、网关，还缺DNS
+vim /etc/resolv.conf
+在文件中填入以下内容
+nameserver 192.168.1.1      <‘192.168.1.1’改成你自己需要的DNS地址即可>
+文章出自数码矩阵(http://blog.sina.com.cn/digitalmatrix
+
+修改完成后重启网络服务
+/etc/init.d/network restart
+
+验证IP是否正确设置，查看本地IP、子网掩码、网关
+ifconfig
+
+验证DNS是否正确设置
+dig www.baidu.com 
